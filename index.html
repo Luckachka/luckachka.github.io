@@ -1,0 +1,34 @@
+<div id="app">
+ <div class="loader" m-show="!loaded">Loading....</div>
+ <nav id="menu">
+  <header>
+   <a href="#" m-on:click="getPage('index')">App Starter </a>
+  </header>
+  <section>
+   <p>{{page.description}}</p>
+   <ul class="navigation">
+    <li class="has-dropdown" m-for="item in pages">
+     <a href="#" m-on:click="getPage(item)">{{item}}</a>
+    </li>
+   </ul>
+  </section>
+  <footer class="footer center">
+   <p><small>App Starter – Version 1.0 </small></p>
+  </footer>
+ </nav>
+ <main id="wrapper" m-show="loaded">
+  <!-- header -->
+  <header id="header">
+   <a href="#" class="menu" m-on:click="showMenu"><span class="ion-chevron-left"></span></a>
+   <!-- App name -->
+   <h2><a href="javascript::void(0)" class="header-title">{{page.title}}</a></h2>
+   <div class="right">
+    <a href="javascript::void(0)"><span class="ion-social-octocat"></span></a>
+    <a href="javascript::void(0)"><span class="ion-social-instagram"></span></a>
+    <a href="javascript::void(0)"><span class="ion-social-twitter"></span></a>
+    <a href="javascript::void(0)"><span class="ion-social-facebook"></span></a>
+   </div>
+  </header>
+  <!-- content -->
+  <section id="content" m-html="page.content"></section>
+ </main>

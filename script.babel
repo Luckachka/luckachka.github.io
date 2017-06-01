@@ -1,0 +1,62 @@
+// init Moon app
+const app = new Moon({
+	data: {
+		// loaded show
+		loaded: false,
+		// pages
+		pages: [
+			"install",
+			"components",
+			"shortcodes",
+			"actions",
+			"extensions",
+			"theme",
+			"requirements",
+			"structure"
+		],
+		// content of page
+		page: []
+	},
+	methods: {
+		// menu click
+		showMenu() {
+			let b = document.querySelector(".menu"),
+				m = document.querySelector("#menu"),
+				w = document.querySelector("#wrapper");
+			m.classList.toggle("is-opened");
+			w.classList.toggle("menu-is-open");
+			if (m.classList.contains("is-opened")) {
+				b.innerHTML = '<span class="ion-chevron-right"></span>';
+			} else {
+				b.innerHTML = '<span class="ion-chevron-left"></span>';
+			}
+		},
+		// get json of page
+		getPage(nameOfPage = "index") {
+			fetch(
+				"https://monchovarela.es/barrio/admin/api/v1/get/pages/name/" + nameOfPage
+			)
+				.then(r => r.json())
+				.then(resolve => {
+					let d = resolve[0];
+					this.set("loaded", true);
+					this.set("page", d);
+					this.set("page.content", marked(d.content));
+					this.callMethod("showMenu");
+				});
+		}
+	},
+	hooks: {
+		// on init
+		init() {
+			this.callMethod("getPage");
+		},
+		// on updated
+		updated() {
+			Prism.highlightAll();
+		}
+	}
+});
+
+// mount new Moon
+app.mount("#app");
